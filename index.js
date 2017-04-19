@@ -3,14 +3,14 @@ var mysql = require('mysql');
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
-
+/*
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
 	database : 'tanks'
 });
-
+*/
 /*
 var connection = mysql.createConnection({
   host     : 'eu-cdbr-west-01.cleardb.com',
@@ -19,6 +19,17 @@ var connection = mysql.createConnection({
   database : 'heroku_84f758f9399c48b'
 });
 */
+
+var pool      =    mysql.createPool({
+    connectionLimit : 100, //important
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'tanks',
+    debug    :  false
+});
+
+/*
 connection.connect(function(err) {
   if(!!err){
 		console.log("Unable to connect to database");
@@ -26,7 +37,7 @@ connection.connect(function(err) {
 		console.log("Connected to database");
 	}
 });
-
+*/
 
 
 var app = express();
@@ -191,7 +202,7 @@ io.on ('connection', function (socket) {
       var inserts = [LogedUsers[socket.id].ID];
       sql = mysql.format(sql, inserts);
 
-      connection.query(sql,function(error, rows, fields){
+      pool.query(sql,function(error, rows, fields){
          if(!!error){
             console.log("Error in the query");
          }else{
@@ -205,7 +216,7 @@ io.on ('connection', function (socket) {
                               LogedUsers[socket.id].ID];
 
                sql = mysql.format(sql, inserts);
-               connection.query(sql,function(error, rows, fields){
+               pool.query(sql,function(error, rows, fields){
                   if(!!error){
                         console.log("SQL error");
                   }else{
@@ -215,7 +226,7 @@ io.on ('connection', function (socket) {
                      var inserts = [upgradeprog + 1,
                                     LogedUsers[socket.id].ID];
                      sql = mysql.format(sql, inserts);
-                     connection.query(sql,function(error, rows, fields){
+                     pool.query(sql,function(error, rows, fields){
                         if(!!error){
                               console.log("SQL error");
                         }else{
@@ -239,7 +250,7 @@ io.on ('connection', function (socket) {
 		var inserts = ['user_name', UserName];
 		sql = mysql.format(sql, inserts);
 
-		connection.query(sql,function(error, rows, fields){
+		pool.query(sql,function(error, rows, fields){
 			if(!!error){
 				console.log("Error in the query");
 			}else{
@@ -248,7 +259,7 @@ io.on ('connection', function (socket) {
 					var inserts = ['login_name', LoginName];
 					sql = mysql.format(sql, inserts);
 
-					connection.query(sql,function(error, rows, fields){
+					pool.query(sql,function(error, rows, fields){
 						if(!!error){
 							console.log("Error in the query");
 						}else{
@@ -280,7 +291,7 @@ io.on ('connection', function (socket) {
 		var inserts = ['login_name', LoginName];
 		sql = mysql.format(sql, inserts);
 
-		connection.query(sql,function(error, rows, fields){
+		pool.query(sql,function(error, rows, fields){
 			if(!!error){
 				console.log("Error in the query");
 			}else{
@@ -305,7 +316,7 @@ io.on ('connection', function (socket) {
 		var inserts = ['ID', id];
 		sql = mysql.format(sql, inserts);
 
-		connection.query(sql,function(error, rows, fields){
+		pool.query(sql,function(error, rows, fields){
 			if(!!error){
 				console.log("Error in the query");
 			}else{
@@ -330,7 +341,7 @@ io.on ('connection', function (socket) {
 		var inserts = ['owner_id', id];
 		sql = mysql.format(sql, inserts);
 
-		connection.query(sql,function(error, rows, fields){
+		pool.query(sql,function(error, rows, fields){
 			if(!!error){
 				console.log("Error in the query");
 			}else{
@@ -362,7 +373,7 @@ io.on ('connection', function (socket) {
       var inserts = [owner_id];
       sql = mysql.format(sql, inserts);
 
-      connection.query(sql,function(error, rows, fields){
+      pool.query(sql,function(error, rows, fields){
          if(!!error){
             console.log("Error in the query");
          }else{
@@ -381,7 +392,7 @@ io.on ('connection', function (socket) {
 				 var inserts = [UserName,hash,LoginName];
 				 sql = mysql.format(sql, inserts);
 
-				 connection.query(sql,function(error, rows, fields){
+				 pool.query(sql,function(error, rows, fields){
 					 if(!!error){
 						 console.log("Error in the query");
 					 }else{
