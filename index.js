@@ -70,7 +70,7 @@ io.on ('connection', function (socket) {
 
       Room.Name = UsersToMatchmakeDeadMatch[0].Socket ; //Name of the room is named after the first player
       for(var i = 0; i < l; i++){
-	 var p = UserstoMatchmakeDeadMatch.pop();
+	 var p = UsersToMatchmakeDeadMatch.pop();
 	 if(LogedUsers[p.Socket] != undefined){
          	Room.Players.push(p);
          	players[""+LogedUsers[Room.Players[Room.length-1].Socket].UserName] = {x: 200, y: 200};
