@@ -3,22 +3,22 @@ var mysql = require('mysql');
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
-
+/*
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
 	database : 'tanks'
 });
+*/
 
-/*
 var connection = mysql.createConnection({
   host     : 'eu-cdbr-west-01.cleardb.com',
   user     : 'bc33589cc8bcc6',
   password : 'b77b362f',
   database : 'heroku_84f758f9399c48b'
 });
-*/
+
 connection.connect(function(err) {
   if(!!err){
 		console.log("Unable to connect to database");
