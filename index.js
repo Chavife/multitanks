@@ -31,7 +31,7 @@ var pool      =    mysql.createPool({
 */
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
-    host     : 'eu-cdbr-west-01.cleardb.comt',
+    host     : 'eu-cdbr-west-01.cleardb.com',
     user     : 'bc33589cc8bcc6',
     password : 'b77b362f',
     database : 'heroku_84f758f9399c48b',
