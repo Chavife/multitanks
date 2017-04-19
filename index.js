@@ -55,7 +55,7 @@ io.on ('connection', function (socket) {
    socket.on ('MatchmakeToDeadMatch' , function(){
       if(LogedUsers[socket.id] == undefined) return;
       UsersToMatchmakeDeadMatch.push({ID:LogedUsers[socket.id].ID , Socket:socket.id, UserName: LogedUsers[socket.id].UserName});
-      if(UsersToMatchmakeDeadMatch.length >= 4){
+      if(UsersToMatchmakeDeadMatch.length >= 2){
          CreateDeadMatchRoom();
       }
    });
