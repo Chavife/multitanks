@@ -3,12 +3,20 @@ var mysql = require('mysql');
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
-
+/*
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
 	database : 'tanks'
+});
+*/
+
+var connection = mysql.createConnection({
+  host     : 'eu-cdbr-west-01.cleardb.com',
+  user     : 'bc33589cc8bcc6',
+  password : 'b77b362f',
+  database : 'heroku_84f758f9399c48b'
 });
 
 connection.connect(function(err) {
@@ -172,7 +180,7 @@ io.on ('connection', function (socket) {
       var upgradeprog = 1;
 
       var sql = "SELECT u.currency, t." + goingToUpgrade + " AS upgrade " +
-                "FROM Users u JOIN Tanks t ON u.ID=t.owner_id " +
+                "FROM users u JOIN tanks t ON u.ID=t.owner_id " +
                 "WHERE u.ID = ?";
       var inserts = [LogedUsers[socket.id].ID];
       sql = mysql.format(sql, inserts);
@@ -184,7 +192,7 @@ io.on ('connection', function (socket) {
             upgradecost = Math.floor(rows[0].upgrade * 2000) + 500;
             upgradeprog = rows[0].upgrade;
             if(rows[0].currency >= upgradecost){
-               var sql = "UPDATE Users " +
+               var sql = "UPDATE users " +
                          "SET currency = ? " +
                          "WHERE ID = ?";
                var inserts = [rows[0].currency - upgradecost,
@@ -195,7 +203,7 @@ io.on ('connection', function (socket) {
                   if(!!error){
                         console.log("SQL error");
                   }else{
-                     var sql = "UPDATE Tanks " +
+                     var sql = "UPDATE tanks " +
                                "SET " + goingToUpgrade + " = ? " +
                                "WHERE owner_id = ?";
                      var inserts = [upgradeprog + 1,
@@ -221,7 +229,7 @@ io.on ('connection', function (socket) {
 
 		if(UserName == '' || LoginName == '' || Pass == '') return;
 
-		var sql = "SELECT * FROM Users WHERE ?? = ?";
+		var sql = "SELECT * FROM users WHERE ?? = ?";
 		var inserts = ['user_name', UserName];
 		sql = mysql.format(sql, inserts);
 
@@ -230,7 +238,7 @@ io.on ('connection', function (socket) {
 				console.log("Error in the query");
 			}else{
 				if(rows.length == 0){ //Nobody with this UserNameExists
-					var sql = "SELECT * FROM Users WHERE ?? = ?";
+					var sql = "SELECT * FROM users WHERE ?? = ?";
 					var inserts = ['login_name', LoginName];
 					sql = mysql.format(sql, inserts);
 
@@ -262,7 +270,7 @@ io.on ('connection', function (socket) {
 
 		if(LoginName == '' || Pass == '') return;
 
-		var sql = "SELECT * FROM Users WHERE ?? = ?";
+		var sql = "SELECT * FROM users WHERE ?? = ?";
 		var inserts = ['login_name', LoginName];
 		sql = mysql.format(sql, inserts);
 
@@ -287,7 +295,7 @@ io.on ('connection', function (socket) {
 	});
 
    var GiveUserInfo = function(id){
-      var sql = "SELECT * FROM Users WHERE ?? = ?";
+      var sql = "SELECT * FROM users WHERE ?? = ?";
 		var inserts = ['ID', id];
 		sql = mysql.format(sql, inserts);
 
@@ -312,7 +320,7 @@ io.on ('connection', function (socket) {
 
    var GiveTank = function(id, ingame){
 
-		var sql = "SELECT * FROM Tanks WHERE ?? = ?";
+		var sql = "SELECT * FROM tanks WHERE ?? = ?";
 		var inserts = ['owner_id', id];
 		sql = mysql.format(sql, inserts);
 
@@ -343,7 +351,7 @@ io.on ('connection', function (socket) {
    }
 
    var CreateNewTank = function(owner_id){
-      var sql = "INSERT INTO Tanks (owner_id, damage, health, shield, tank_rotation_speed, barrel_rotation_speed, tank_speed, shoot_speed) " +
+      var sql = "INSERT INTO tanks (owner_id, damage, health, shield, tank_rotation_speed, barrel_rotation_speed, tank_speed, shoot_speed) " +
 					 "VALUES (?,1,1,1,1,1,1,1)";
       var inserts = [owner_id];
       sql = mysql.format(sql, inserts);
@@ -359,7 +367,7 @@ io.on ('connection', function (socket) {
 
 
 	var CreateUser = function(UserName, LoginName, Pass){
-		var sql = "INSERT INTO Users (user_name, password, login_name, currency) " +
+		var sql = "INSERT INTO users (user_name, password, login_name, currency) " +
 					 "VALUES (?,?,?,10000)";
 
 		bcrypt.genSalt(saltRounds, function(err, salt) {
