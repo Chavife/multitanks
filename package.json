@@ -1,0 +1,18 @@
+{
+  "name": "tanks",
+  "version": "1.0.0",
+  "description": "Multiplayer tank game",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mysql": "^2.13.0",
+    "nodejs": "^0.0.0",
+    "socketio": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ladislav Feldsam",
+  "license": "ISC"
+}
