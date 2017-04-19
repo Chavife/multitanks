@@ -113,6 +113,7 @@ io.on ('connection', function (socket) {
 	});
 
    socket.on ('ChangingTankAngle', function (angle) {
+	   if(LogedUsers[socket.id] == undefined) return;
       //GiveUserInfo(LogedUsers[socket.id].ID);
       var room = DeadMatchRooms[LogedUsers[socket.id].InGame];
       if(room != undefined){
@@ -125,6 +126,7 @@ io.on ('connection', function (socket) {
 	});
 
    socket.on ('ChangingTurretAngle', function (angle) {
+		if(LogedUsers[socket.id] == undefined) return;
       var room = DeadMatchRooms[LogedUsers[socket.id].InGame];
       if(room != undefined){
          for(var i = 0; i < room.Players.length ; i++){
@@ -136,6 +138,7 @@ io.on ('connection', function (socket) {
 	});
 
    socket.on ('ChangingPosition', function (x,y) {
+	   if(LogedUsers[socket.id] == undefined) return;
       //GiveUserInfo(LogedUsers[socket.id].ID);
       var room = DeadMatchRooms[LogedUsers[socket.id].InGame];
       if(room != undefined){
