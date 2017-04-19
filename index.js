@@ -70,13 +70,16 @@ io.on ('connection', function (socket) {
 
       Room.Name = UsersToMatchmakeDeadMatch[0].Socket ; //Name of the room is named after the first player
       for(var i = 0; i < l; i++){
-         Room.Players.push(UsersToMatchmakeDeadMatch.pop());
-         players[""+LogedUsers[Room.Players[i].Socket].UserName] = {x: 200, y: 200};
-         LogedUsers[Room.Players[i].Socket].InGame = Room.Name;
+	 var p = UserstoMatchmakeDeadMatch.pop();
+	 if(LogedUsers[p.Socket] != undefined){
+         	Room.Players.push(p);
+         	players[""+LogedUsers[Room.Players[Room.length-1].Socket].UserName] = {x: 200, y: 200};
+         	LogedUsers[Room.Players[Room.length-1].Socket].InGame = Room.Name;
+	 }
       }
 
       console.log(players);
-      for(var i = 0; i < l; i++){
+      for(var i = 0; i < Room.length; i++){
          io.to(Room.Players[i].Socket).emit("GameStart",players);
       }
 
