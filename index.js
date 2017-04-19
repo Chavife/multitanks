@@ -73,8 +73,8 @@ io.on ('connection', function (socket) {
 	 var p = UsersToMatchmakeDeadMatch.pop();
 	 if(LogedUsers[p.Socket] != undefined){
          	Room.Players.push(p);
-         	players[""+LogedUsers[Room.Players[Room.length-1].Socket].UserName] = {x: 200, y: 200};
-         	LogedUsers[Room.Players[Room.length-1].Socket].InGame = Room.Name;
+         	players[""+LogedUsers[Room.Players[Room.Players.length-1].Socket].UserName] = {x: 200, y: 200};
+         	LogedUsers[Room.Players[Room.Players.length-1].Socket].InGame = Room.Name;
 	 }
       }
 
