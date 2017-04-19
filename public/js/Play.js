@@ -58,7 +58,6 @@ socket.on('PlayTank',function(tank) {
    MaxSH = Math.round(47.37*tank.sh + 53); //100 - 1000
    tankRotSpeed = 0.21*tank.trs + 0.79; //1-5
    turretRotSpeed = Math.round(13.16*tank.brs + 36.84); //50-300
-   console.log(turretRotSpeed);
    tankSpeed = Math.round(13.16*tank.ts + 136.84); //150-400
    fireRate = Math.round(-47.37*tank.ss + 1047); //1000-100
    currentHP = MaxHP;

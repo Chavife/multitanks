@@ -3,22 +3,22 @@ var mysql = require('mysql');
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
-/*
+
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
 	database : 'tanks'
 });
-*/
 
+/*
 var connection = mysql.createConnection({
   host     : 'eu-cdbr-west-01.cleardb.com',
   user     : 'bc33589cc8bcc6',
   password : 'b77b362f',
   database : 'heroku_84f758f9399c48b'
 });
-
+*/
 connection.connect(function(err) {
   if(!!err){
 		console.log("Unable to connect to database");
@@ -70,16 +70,16 @@ io.on ('connection', function (socket) {
 
       Room.Name = UsersToMatchmakeDeadMatch[0].Socket ; //Name of the room is named after the first player
       for(var i = 0; i < l; i++){
-	 var p = UsersToMatchmakeDeadMatch.pop();
-	 if(LogedUsers[p.Socket] != undefined){
-         	Room.Players.push(p);
-         	players[""+LogedUsers[Room.Players[Room.Players.length-1].Socket].UserName] = {x: 200, y: 200};
-         	LogedUsers[Room.Players[Room.Players.length-1].Socket].InGame = Room.Name;
-	 }
+      	 var p = UsersToMatchmakeDeadMatch.pop();
+      	 if(LogedUsers[p.Socket] != undefined){
+            	Room.Players.push(p);
+            	players[""+LogedUsers[Room.Players[Room.Players.length-1].Socket].UserName] = {x: 200, y: 200};
+            	LogedUsers[Room.Players[Room.Players.length-1].Socket].InGame = Room.Name;
+         }
       }
 
       console.log(players);
-      for(var i = 0; i < Room.length; i++){
+      for(var i = 0; i < Room.Players.length; i++){
          io.to(Room.Players[i].Socket).emit("GameStart",players);
       }
 
