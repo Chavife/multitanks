@@ -19,13 +19,22 @@ var connection = mysql.createConnection({
   database : 'heroku_84f758f9399c48b'
 });
 */
-
+/*
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
     user     : 'root',
     password : '',
     database : 'tanks',
+    debug    :  false
+});
+*/
+var pool      =    mysql.createPool({
+    connectionLimit : 100, //important
+    host     : 'eu-cdbr-west-01.cleardb.comt',
+    user     : 'bc33589cc8bcc6',
+    password : 'b77b362f',
+    database : 'heroku_84f758f9399c48b',
     debug    :  false
 });
 
